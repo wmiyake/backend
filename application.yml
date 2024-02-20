@@ -1,8 +1,14 @@
 # Configurações do banco de dados PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/postgre
-spring.datasource.username=postgre
-spring.datasource.password=postgre
-
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/postgres
+    username: postgres
+    password: postgres
+  
 # Configurações do Hibernate
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
