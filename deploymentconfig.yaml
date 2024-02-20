@@ -1,0 +1,46 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: backenditdolution-app:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+            requests:
+              cpu: "0.25"
+              memory: "256Mi"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "production"
+            - name: DATABASE_URL
+              value: "jdbc:postgresql://localhost:5432/postgres"
+            # Other environment variables needed by your backend application
+      imagePullSecrets:
+        - name: your-docker-registry-secret
+  strategy:
+    type: Rolling
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - backend
+        from:
+          kind: ImageStreamTag
+          name: backend-image-react:latest
+  paused: false
